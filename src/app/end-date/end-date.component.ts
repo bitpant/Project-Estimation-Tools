@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-end-date',
@@ -10,21 +11,53 @@ export class EndDateComponent implements OnInit {
 ngOnInit(): void {
   }
 
-  startDate: Date = new Date(); // initialize startDate property with current date
-    resourceCount: number = 0;
+    startDate!: Date ;
+    resourceCount: number = 1;
     totalHolidays: number = 0;
     totalMD: number = 0;
-    workPercentage: number = 0;
-    featureEndDate: Date = new Date(); // initialize featureEndDate property with current date
+    workPercentage: number = 40;
+    featureEndDate!: Date;
 
 
     calculateFeatureEndDate() {
-      // Calculate the number of workdays based on the resource count, total holidays/leaves, total MD, and work percentage.
-      const workDays = this.resourceCount * (1 - this.totalMD / 100) * this.workPercentage / 100;
-      const totalDays = Math.ceil(workDays + this.totalHolidays);
+    console.log("function called ");
+            /* console.log("startDate:"+this.startDate);
+             console.log("resourceCount:"+this.resourceCount);
+             console.log("totalHolidays:"+this.totalHolidays);
+             console.log("totalMD:"+this.totalMD);
+             console.log("workPercentage:"+this.workPercentage); */
+      // Convert work percentage to decimal
+       const workPercentageDecimal = this.workPercentage / 100;
 
-      // Calculate the feature end date by adding the total number of days to the start date.
-      this.featureEndDate = new Date(this.startDate.getTime() + totalDays * 24 * 60 * 60 * 1000);
+       // Calculate total working days based on resource count and MDs
+       const totalWorkingDays = (this.totalMD) / workPercentageDecimal / this.resourceCount;
+
+       // Subtract holidays/leaves from total working days
+       const totalWorkingDaysMinusHolidays: number = (totalWorkingDays + (this.totalHolidays*3.2)/8);
+
+       // Using moment.js to add working days to start date and set as feature end date
+       /* this.featureEndDate = moment(this.startDate)
+         .startOf('day')
+         .add(totalWorkingDaysMinusHolidays, 'days')
+         .toDate(); */
+
+         this.featureEndDate = this.addBusinessDays(this.startDate,totalWorkingDaysMinusHolidays-1);
+        /*  console.log("totalWorkingDaysMinusHolidays:"+totalWorkingDaysMinusHolidays);
+         console.log("featureEndDate:"+this.featureEndDate); */
+
+    }
+
+    public addBusinessDays(date:Date, daysToAdd:number) {
+        var cnt = 0;
+        var tmpDate = moment(date);
+        while (cnt < daysToAdd) {
+            tmpDate = tmpDate.add('days', 1);
+            if (tmpDate.weekday() != moment().day("Sunday").weekday() && tmpDate.weekday() != moment().day("Saturday").weekday()) {
+                cnt = cnt + 1;
+            }
+        }
+
+        return tmpDate.toDate();
     }
 
 }
