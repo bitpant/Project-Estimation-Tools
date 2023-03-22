@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'CR-End-Date-calc';
+  title = 'Product Feature/Change   Request Estimate Helper';
 }

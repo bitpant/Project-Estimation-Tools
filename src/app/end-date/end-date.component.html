@@ -1,0 +1,37 @@
+
+<div class="container">
+
+  <form>
+    <label class="form-heading">Product Feature End Date Calculate:</label>
+    <div class="form-group">
+      <label for="total-md">Total MD:</label>
+      <input type="number" class="form-control" id="total-md" [(ngModel)]="totalMD" (ngModelChange)="calculateFeatureEndDate()">
+    </div>
+    <div class="form-group">
+      <label for="resource-count">Resource Count:</label>
+      <input type="number" class="form-control" id="resource-count" [(ngModel)]="resourceCount" (ngModelChange)="calculateFeatureEndDate()">
+    </div>
+    <div class="form-group">
+      <label for="total-holidays">Total Holidays/Leaves:</label>
+      <input type="number" class="form-control" id="total-holidays" [(ngModel)]="totalHolidays" (ngModelChange)="calculateFeatureEndDate()">
+    </div>
+    <div class="form-group">
+      <label for="start-date">Start Date:</label>
+      <input type="date" class="form-control" id="start-date" [(ngModel)]="startDate" (ngModelChange)="calculateFeatureEndDate()">
+    </div>
+    <div class="form-group">
+      <label for="work-percentage">Work Percentage:</label>
+      <input type="number" class="form-control" id="work-percentage" [(ngModel)]="workPercentage" (ngModelChange)="calculateFeatureEndDate()">
+    </div>
+    <div class="form-group">
+      <p>Feature End Date: {{ featureEndDate | date:'mediumDate' }}</p>
+    </div>
+<!--
+    <button type="button" class="btn btn-primary" (click)="calculateFeatureEndDate()">Calculate End Date</button>
+-->
+    <!--<div *ngIf="featureEndDate" class="output">
+      <p>Feature End Date: {{ featureEndDate | date:'mediumDate' }}</p>
+    </div>-->
+  </form>
+
+</div>

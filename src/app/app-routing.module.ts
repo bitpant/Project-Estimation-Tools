@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-const routes: Routes = [];
+import { EndDateComponent } from './end-date/end-date.component';
+const routes: Routes = [
+  { path: 'End-Date-Calculator', component: EndDateComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
