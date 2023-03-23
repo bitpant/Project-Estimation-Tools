@@ -20,31 +20,15 @@ ngOnInit(): void {
 
 
     calculateFeatureEndDate() {
-    console.log("function called ");
-            /* console.log("startDate:"+this.startDate);
-             console.log("resourceCount:"+this.resourceCount);
-             console.log("totalHolidays:"+this.totalHolidays);
-             console.log("totalMD:"+this.totalMD);
-             console.log("workPercentage:"+this.workPercentage); */
-      // Convert work percentage to decimal
+    if (this.resourceCount != null && this.resourceCount !== 0) {
+        // Convert work percentage to decimal
        const workPercentageDecimal = this.workPercentage / 100;
-
        // Calculate total working days based on resource count and MDs
        const totalWorkingDays = (this.totalMD) / workPercentageDecimal / this.resourceCount;
-
        // Subtract holidays/leaves from total working days
        const totalWorkingDaysMinusHolidays: number = (totalWorkingDays + (this.totalHolidays*3.2)/8);
-
-       // Using moment.js to add working days to start date and set as feature end date
-       /* this.featureEndDate = moment(this.startDate)
-         .startOf('day')
-         .add(totalWorkingDaysMinusHolidays, 'days')
-         .toDate(); */
-
-         this.featureEndDate = this.addBusinessDays(this.startDate,totalWorkingDaysMinusHolidays-1);
-        /*  console.log("totalWorkingDaysMinusHolidays:"+totalWorkingDaysMinusHolidays);
-         console.log("featureEndDate:"+this.featureEndDate); */
-
+        this.featureEndDate = this.addBusinessDays(this.startDate,totalWorkingDaysMinusHolidays-1);
+    }
     }
 
     public addBusinessDays(date:Date, daysToAdd:number) {
